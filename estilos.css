@@ -1,0 +1,106 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* Carrito flotante */
+.carrito-flotante {
+    position: fixed; top: 20px; right: 20px; background-color: #007bff; color: white;
+    padding: 15px 20px; border-radius: 50px; font-size: 1.2rem; font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); z-index: 1000;
+    display: flex; align-items: center; gap: 10px; cursor: pointer; transition: transform 0.2s;
+}
+.carrito-flotante:hover { transform: scale(1.05); }
+#contador-carrito {
+    background-color: white; color: #007bff; border-radius: 50%; width: 25px; height: 25px;
+    display: flex; justify-content: center; align-items: center; font-size: 0.9rem;
+}
+
+/* Eslogan y Categorías */
+.slogan-container { text-align: center; margin-top: 20px; margin-bottom: 30px; }
+.slogan-container img { width: 300px; height: auto; display: block; margin: 0 auto; background-color: #e0e0e0; border-radius: 8px; }
+.categorias-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
+.categoria-btn {
+    background-color: #ffffff; color: #333; padding: 10px 25px; border-radius: 30px; font-weight: bold; border: 2px solid #ddd;
+    transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-transform: uppercase; font-size: 0.9rem; cursor: pointer; font-family: inherit;
+}
+.categoria-btn:hover, .categoria-btn.activo { background-color: #007bff; color: white; border-color: #007bff; transform: translateY(-2px); }
+
+/* Cartelera y Tarjetas */
+.cartelera { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; max-width: 900px; margin: 0 auto; }
+.producto-card {
+    background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden; text-align: center; transition: transform 0.2s ease; position: relative; cursor: pointer;
+}
+.producto-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.badge-categoria {
+    position: absolute; top: 10px; right: 10px; background-color: rgba(0, 123, 255, 0.9); color: white;
+    padding: 4px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; z-index: 10;
+}
+.producto-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.producto-info { padding: 15px; }
+.producto-nombre { font-size: 1.1rem; font-weight: 600; margin: 0 0 10px 0; color: #222; }
+.producto-precio { font-size: 1.3rem; font-weight: bold; color: #007bff; margin: 0; }
+
+/* --- ESTILOS DE LAS VENTANAS MODALES --- */
+.modal-fondo {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); z-index: 2000; justify-content: center; align-items: center;
+}
+.modal-contenido {
+    background-color: #fff; border-radius: 15px; width: 90%; max-width: 500px;
+    position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: bajarModal 0.3s ease-out;
+}
+@keyframes bajarModal { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.btn-cerrar {
+    position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #fff; cursor: pointer; z-index: 10; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.btn-cerrar:hover { color: #ff4d4d; }
+.modal-img { width: 100%; height: 250px; object-fit: cover; }
+.modal-info { padding: 20px; }
+#modal-titulo { margin: 0 0 10px 0; font-size: 1.5rem; color: #222; }
+.modal-precio { font-size: 1.4rem; font-weight: bold; color: #007bff; margin: 0 0 15px 0; }
+.modal-descripcion { color: #555; line-height: 1.5; margin-bottom: 20px; font-size: 0.95rem;}
+.modal-acciones { display: flex; align-items: center; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
+.modal-acciones label { font-weight: bold; color: #333; }
+.input-cantidad { width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 6px; text-align: center; font-size: 1rem; font-weight: bold; outline: none; }
+.input-cantidad:focus { border-color: #007bff; }
+.btn-añadir { background-color: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; flex-grow: 1; }
+.btn-añadir:hover { background-color: #218838; }
+
+/* --- ESTILOS DEL CARRITO (MODAL 2) --- */
+.modal-carrito-contenido { padding: 20px; max-width: 400px; }
+.titulo-carrito { text-align: center; color: #222; margin-top: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+.lista-carrito { max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
+.item-carrito {
+    display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ddd; font-size: 1rem;
+}
+.item-carrito span:last-child { font-weight: bold; color: #007bff; }
+.total-carrito {
+    display: flex; justify-content: space-between; align-items: center; background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+}
+.total-carrito h3 { margin: 0; color: #333; }
+.btn-whatsapp {
+    width: 100%; background-color: #25D366; color: white; border: none; padding: 15px; border-radius: 8px;
+    font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;
+    transition: background-color 0.2s;
+}
+.btn-whatsapp:hover { background-color: #128C7E; }
+.btn-whatsapp::before {
+    content: "📱"; /* Icono simple con emoji */
+}
+
+/* Clases de utilidad */
+.oculto { display: none !important; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .cartelera { grid-template-columns: 1fr; }
+    .modal-acciones { flex-direction: column; align-items: stretch; }
+    .input-cantidad { width: 100%; margin-bottom: 10px; }
+}

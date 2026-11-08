@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParlantePablo</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- Carrito flotante (Ahora es clickeable) -->
+    <div class="carrito-flotante" onclick="abrirCarrito()">
+        🛒 <span id="contador-carrito">0</span>
+    </div>
+
+    <!-- Encabezado -->
+    <header class="slogan-container">
+        <img src="slogan.jpg" alt="Slogan de ParlantePablo">
+    </header>
+
+    <!-- Menú de Categorías -->
+    <nav class="categorias-nav">
+        <button class="categoria-btn activo" onclick="filtrarCategoria('todos', event)">Todos</button>
+        <button class="categoria-btn" onclick="filtrarCategoria('parlantes', event)">Parlantes</button>
+        <button class="categoria-btn" onclick="filtrarCategoria('microfonos', event)">Micrófonos</button>
+        <button class="categoria-btn" onclick="filtrarCategoria('accesorios', event)">Accesorios</button>
+    </nav>
+
+    <!-- Contenedor de la cartelera -->
+    <main class="cartelera" id="cartelera">
+
+        <!-- Cuadro 1 -->
+        <div class="producto-card" data-categoria="parlantes" 
+             onclick="abrirModal('Parlante Bluetooth Portátil', 100, 'Parlante inalámbrico con sonido envolvente, batería de 12 horas de duración y resistencia al agua. Ideal para exteriores.', 'https://via.placeholder.com/400x200?text=Foto+del+Parlante')">
+            <span class="badge-categoria">Parlantes</span>
+            <img src="https://via.placeholder.com/400x200?text=Foto+del+Parlante" alt="Parlante Bluetooth">
+            <div class="producto-info">
+                <h2 class="producto-nombre">Parlante Bluetooth Portátil</h2>
+                <p class="producto-precio">100BS</p>
+            </div>
+        </div>
+
+        <!-- Cuadro 2 -->
+        <div class="producto-card" data-categoria="microfonos" 
+             onclick="abrirModal('Micrófono Condensador', 250, 'Micrófono condensador profesional de alta fidelidad. Incluye brazo articulado y filtro antipop para grabaciones nítidas.', 'https://via.placeholder.com/400x200?text=Foto+del+Microfono')">
+            <span class="badge-categoria">Micrófonos</span>
+            <img src="https://via.placeholder.com/400x200?text=Foto+del+Microfono" alt="Micrófono de Estudio">
+            <div class="producto-info">
+                <h2 class="producto-nombre">Micrófono Condensador</h2>
+                <p class="producto-precio">250BS</p>
+            </div>
+        </div>
+
+        <!-- Cuadro 3 -->
+        <div class="producto-card" data-categoria="accesorios" 
+             onclick="abrirModal('Cable XLR Profesional', 50, 'Cable XLR de 3 metros, blindado contra interferencias. Conectores de metal bañados en oro para máxima durabilidad.', 'https://via.placeholder.com/400x200?text=Foto+del+Accesorio')">
+            <span class="badge-categoria">Accesorios</span>
+            <img src="https://via.placeholder.com/400x200?text=Foto+del+Accesorio" alt="Cable XLR">
+            <div class="producto-info">
+                <h2 class="producto-nombre">Cable XLR Profesional</h2>
+                <p class="producto-precio">50BS</p>
+            </div>
+        </div>
+
+        <!-- Cuadro 4 -->
+        <div class="producto-card" data-categoria="parlantes" 
+             onclick="abrirModal('Parlante Gamer RGB', 150, 'Parlantes para PC con iluminación RGB y subwoofer. Sumérgete en tus juegos con un sonido potente y graves profundos.', 'https://via.placeholder.com/400x200?text=Foto+del+Parlante+2')">
+            <span class="badge-categoria">Parlantes</span>
+            <img src="https://via.placeholder.com/400x200?text=Foto+del+Parlante+2" alt="Parlante Gamer">
+            <div class="producto-info">
+                <h2 class="producto-nombre">Parlante Gamer RGB</h2>
+                <p class="producto-precio">150BS</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- MODAL 1: DETALLE DEL PRODUCTO -->
+    <!-- ========================================== -->
+    <div id="miModal" class="modal-fondo">
+        <div class="modal-contenido">
+            <span class="btn-cerrar" onclick="cerrarModal('miModal')">&times;</span>
+            <img id="modal-img" src="" alt="Producto" class="modal-img">
+            <div class="modal-info">
+                <h2 id="modal-titulo">Nombre</h2>
+                <p id="modal-precio" class="modal-precio">0BS</p>
+                <p id="modal-descripcion" class="modal-descripcion">Descripción</p>
+                <div class="modal-acciones">
+                    <label for="modal-cantidad">Cantidad:</label>
+                    <input type="number" id="modal-cantidad" min="1" value="1" class="input-cantidad">
+                    <button class="btn-añadir" onclick="añadirAlCarrito()">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 2: LISTA DEL CARRITO / FINALIZAR COMPRA -->
+    <!-- ========================================== -->
+    <div id="modalCarrito" class="modal-fondo">
+        <div class="modal-contenido modal-carrito-contenido">
+            <span class="btn-cerrar" onclick="cerrarModal('modalCarrito')">&times;</span>
+            <h2 class="titulo-carrito">Tu Lista de Compras</h2>
+            
+            <!-- Aquí JavaScript inyectará los productos -->
+            <div id="lista-carrito" class="lista-carrito">
+                <!-- Ejemplo de cómo se verá:
+                <div class="item-carrito">
+                    <span>2x Parlante Bluetooth</span>
+                    <span>200BS</span>
+                </div> 
+                -->
+            </div>
+
+            <div class="total-carrito">
+                <h3>Total a pagar:</h3>
+                <h3 id="total-precio">0BS</h3>
+            </div>
+
+            <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+                Enviar pedido por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
