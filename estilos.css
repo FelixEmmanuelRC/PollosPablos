@@ -20,9 +20,36 @@ body {
     display: flex; justify-content: center; align-items: center; font-size: 0.9rem;
 }
 
-/* Eslogan y Categorías */
+/* Eslogan */
 .slogan-container { text-align: center; margin-top: 20px; margin-bottom: 30px; }
 .slogan-container img { width: 300px; height: auto; display: block; margin: 0 auto; background-color: #e0e0e0; border-radius: 8px; }
+
+/* --- ESTILOS DEL BUSCADOR --- */
+.buscador-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.buscador-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.buscador-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+/* ---------------------------- */
+
+/* Categorías */
 .categorias-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
 .categoria-btn {
     background-color: #ffffff; color: #333; padding: 10px 25px; border-radius: 30px; font-weight: bold; border: 2px solid #ddd;
@@ -31,7 +58,16 @@ body {
 .categoria-btn:hover, .categoria-btn.activo { background-color: #007bff; color: white; border-color: #007bff; transform: translateY(-2px); }
 
 /* Cartelera y Tarjetas */
-.cartelera { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; max-width: 900px; margin: 0 auto; }
+.cartelera { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 25px; 
+    max-width: 900px; 
+    margin: 0 auto; 
+    /* Necesario para que el mensaje de "sin resultados" ocupe todo el ancho */
+    position: relative; 
+}
+
 .producto-card {
     background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     overflow: hidden; text-align: center; transition: transform 0.2s ease; position: relative; cursor: pointer;
@@ -45,6 +81,19 @@ body {
 .producto-info { padding: 15px; }
 .producto-nombre { font-size: 1.1rem; font-weight: 600; margin: 0 0 10px 0; color: #222; }
 .producto-precio { font-size: 1.3rem; font-weight: bold; color: #007bff; margin: 0; }
+
+/* --- ESTILOS MENSAJE SIN RESULTADOS --- */
+.sin-resultados {
+    grid-column: 1 / -1; /* Ocupa todas las columnas de la cuadrícula */
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.sin-resultados h3 { color: #555; margin-bottom: 10px; }
+.sin-resultados p { color: #888; }
+/* ------------------------------------- */
 
 /* --- ESTILOS DE LAS VENTANAS MODALES --- */
 .modal-fondo {
@@ -91,9 +140,7 @@ body {
     transition: background-color 0.2s;
 }
 .btn-whatsapp:hover { background-color: #128C7E; }
-.btn-whatsapp::before {
-    content: "📱"; /* Icono simple con emoji */
-}
+.btn-whatsapp::before { content: "📱"; }
 
 /* Clases de utilidad */
 .oculto { display: none !important; }

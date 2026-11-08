@@ -1,41 +1,66 @@
-// ⚠️ CAMBIA ESTE NÚMERO POR EL TUYO O EL DEL CLIENTE (Incluye el código de país, ej: 591 para Bolivia)
+// ⚠️ CAMBIA ESTE NÚMERO POR EL TUYO O EL DEL CLIENTE
 const NUMERO_WHATSAPP = "59170000000"; 
 
 let totalArticulos = 0;
 let productoActual = { nombre: "", precio: 0 };
-let carrito = []; // Aquí se guardan los productos { nombre, precio, cantidad }
+let carrito = [];
+let categoriaActual = 'todos'; // Guarda qué categoría está seleccionada
 
-// 1. Lógica para filtrar categorías
-function filtrarCategoria(categoria, event) {
+// 1. Lógica para buscar productos por nombre
+function buscarProductos() {
+    const textoBusqueda = document.getElementById('buscador').value.toLowerCase();
     const productos = document.querySelectorAll('.producto-card');
+    let resultadosVisibles = 0;
+
+    productos.forEach(producto => {
+        const nombreProducto = producto.querySelector('.producto-nombre').innerText.toLowerCase();
+        const categoriaProducto = producto.getAttribute('data-categoria');
+
+        // Comprobar si coincide con la búsqueda Y con la categoría seleccionada
+        const coincideBusqueda = nombreProducto.includes(textoBusqueda);
+        const coincideCategoria = (categoriaActual === 'todos' || categoriaProducto === categoriaActual);
+
+        if (coincideBusqueda && coincideCategoria) {
+            producto.classList.remove('oculto');
+            resultadosVisibles++;
+        } else {
+            producto.classList.add('oculto');
+        }
+    });
+
+    // Mostrar u ocultar mensaje de "Sin resultados"
+    const mensajeSinResultados = document.getElementById('sin-resultados');
+    if (resultadosVisibles === 0) {
+        mensajeSinResultados.classList.remove('oculto');
+    } else {
+        mensajeSinResultados.classList.add('oculto');
+    }
+}
+
+// 2. Lógica para filtrar categorías
+function filtrarCategoria(categoria, event) {
+    categoriaActual = categoria; // Guardamos la categoría actual
     const botones = document.querySelectorAll('.categoria-btn');
 
     botones.forEach(boton => boton.classList.remove('activo'));
     if(event) event.target.classList.add('activo');
 
-    productos.forEach(producto => {
-        const categoriaProducto = producto.getAttribute('data-categoria');
-        if (categoria === 'todos' || categoriaProducto === categoria) {
-            producto.classList.remove('oculto');
-        } else {
-            producto.classList.add('oculto');
-        }
-    });
+    // Llamamos a buscarProductos() para que aplique ambos filtros (texto y categoría)
+    buscarProductos(); 
 }
 
-// 2. Abrir y cerrar modales genéricos
+// 3. Abrir y cerrar modales
 function cerrarModal(idModal) {
     document.getElementById(idModal).style.display = 'none';
 }
 
-// Cerrar modal si se hace clic fuera de la caja blanca
 window.onclick = function(event) {
     if (event.target.classList.contains('modal-fondo')) {
         event.target.style.display = 'none';
     }
 }
 
-// 3. Modal de Detalle del Producto
+// 4. Modal de Detalle del Producto
 function abrirModal(nombre, precio, descripcion, imagen) {
     productoActual = { nombre: nombre, precio: precio };
     document.getElementById('modal-titulo').innerText = nombre;
@@ -46,12 +71,11 @@ function abrirModal(nombre, precio, descripcion, imagen) {
     document.getElementById('miModal').style.display = 'flex';
 }
 
-// 4. Añadir producto desde el Modal al Carrito
+// 5. Añadir producto al Carrito
 function añadirAlCarrito() {
     const cantidad = parseInt(document.getElementById('modal-cantidad').value);
 
     if (cantidad > 0) {
-        // Verificamos si el producto ya está en el carrito para solo sumar la cantidad
         const index = carrito.findIndex(item => item.nombre === productoActual.nombre);
         
         if (index !== -1) {
@@ -71,18 +95,17 @@ function añadirAlCarrito() {
     }
 }
 
-// 5. Actualizar el contador flotante y la lista del carrito
+// 6. Actualizar el contador flotante
 function actualizarCarritoUI() {
-    // Actualizar contador flotante
     totalArticulos = carrito.reduce((total, item) => total + item.cantidad, 0);
     document.getElementById('contador-carrito').innerText = totalArticulos;
 }
 
-// 6. Abrir el Modal del Carrito
+// 7. Abrir el Modal del Carrito
 function abrirCarrito() {
     const listaHTML = document.getElementById('lista-carrito');
     const totalPrecioHTML = document.getElementById('total-precio');
-    listaHTML.innerHTML = ''; // Limpiar la lista
+    listaHTML.innerHTML = ''; 
     let totalPagar = 0;
 
     if (carrito.length === 0) {
@@ -92,7 +115,6 @@ function abrirCarrito() {
             const subtotal = item.precio * item.cantidad;
             totalPagar += subtotal;
             
-            // Creamos el HTML para cada producto en el carrito
             const div = document.createElement('div');
             div.className = 'item-carrito';
             div.innerHTML = `
@@ -107,15 +129,14 @@ function abrirCarrito() {
     document.getElementById('modalCarrito').style.display = 'flex';
 }
 
-// 7. ENVIAR POR WHATSAPP
+// 8. ENVIAR POR WHATSAPP
 function enviarWhatsApp() {
     if (carrito.length === 0) {
         alert("No tienes productos en el carrito.");
         return;
     }
 
-    // Construir el mensaje
-    let mensaje = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A"; // %0A es un salto de línea en URL
+    let mensaje = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A"; 
     let total = 0;
 
     carrito.forEach(item => {
@@ -127,10 +148,6 @@ function enviarWhatsApp() {
     mensaje += `%0A*Total a pagar: ${total}BS*`;
     mensaje += `%0A%0APor favor, confírmenme la disponibilidad.`;
 
-    // Crear el enlace de WhatsApp
-    // Usamos wa.me que es la API oficial y funciona en PC y celular
-    const url = `https://wa.me/${71595718}?text=${mensaje}`;
-
-    // Abrir en una nueva pestaña
+    const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`;
     window.open(url, '_blank');
 }

@@ -8,15 +8,20 @@
 </head>
 <body>
 
-    <!-- Carrito flotante (Ahora es clickeable) -->
+    <!-- Carrito flotante -->
     <div class="carrito-flotante" onclick="abrirCarrito()">
         🛒 <span id="contador-carrito">0</span>
     </div>
 
     <!-- Encabezado -->
     <header class="slogan-container">
-        <img src="slogan.jpg" alt="Slogan de ParlantePablo">
+        <img src="https://via.placeholder.com/600x150?text=AQUI+VA+TU+ESLOGAN" alt="Slogan de ParlantePablo">
     </header>
+
+    <!-- BUSCADOR DE PRODUCTOS -->
+    <div class="buscador-container">
+        <input type="text" id="buscador" class="buscador-input" placeholder="🔍 Buscar producto por nombre..." onkeyup="buscarProductos()">
+    </div>
 
     <!-- Menú de Categorías -->
     <nav class="categorias-nav">
@@ -73,11 +78,26 @@
             </div>
         </div>
 
+        <!-- Cuadro 5 (Agregué uno extra para probar el buscador) -->
+        <div class="producto-card" data-categoria="accesorios" 
+             onclick="abrirModal('Soporte para Micrófono', 80, 'Soporte de escritorio resistente para micrófonos. Base pesada y brazo ajustable.', 'https://via.placeholder.com/400x200?text=Soporte+Microfono')">
+            <span class="badge-categoria">Accesorios</span>
+            <img src="https://via.placeholder.com/400x200?text=Soporte+Microfono" alt="Soporte para Micrófono">
+            <div class="producto-info">
+                <h2 class="producto-nombre">Soporte para Micrófono</h2>
+                <p class="producto-precio">80BS</p>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay resultados -->
+        <div id="sin-resultados" class="sin-resultados oculto">
+            <h3>No se encontraron productos</h3>
+            <p>Intenta buscar con otras palabras.</p>
+        </div>
+
     </main>
 
-    <!-- ========================================== -->
     <!-- MODAL 1: DETALLE DEL PRODUCTO -->
-    <!-- ========================================== -->
     <div id="miModal" class="modal-fondo">
         <div class="modal-contenido">
             <span class="btn-cerrar" onclick="cerrarModal('miModal')">&times;</span>
@@ -95,29 +115,16 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- MODAL 2: LISTA DEL CARRITO / FINALIZAR COMPRA -->
-    <!-- ========================================== -->
+    <!-- MODAL 2: LISTA DEL CARRITO -->
     <div id="modalCarrito" class="modal-fondo">
         <div class="modal-contenido modal-carrito-contenido">
             <span class="btn-cerrar" onclick="cerrarModal('modalCarrito')">&times;</span>
             <h2 class="titulo-carrito">Tu Lista de Compras</h2>
-            
-            <!-- Aquí JavaScript inyectará los productos -->
-            <div id="lista-carrito" class="lista-carrito">
-                <!-- Ejemplo de cómo se verá:
-                <div class="item-carrito">
-                    <span>2x Parlante Bluetooth</span>
-                    <span>200BS</span>
-                </div> 
-                -->
-            </div>
-
+            <div id="lista-carrito" class="lista-carrito"></div>
             <div class="total-carrito">
                 <h3>Total a pagar:</h3>
                 <h3 id="total-precio">0BS</h3>
             </div>
-
             <button class="btn-whatsapp" onclick="enviarWhatsApp()">
                 Enviar pedido por WhatsApp
             </button>
